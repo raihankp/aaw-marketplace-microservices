@@ -27,6 +27,7 @@ WORKDIR /aaw-marketplace-microservices/tenant
 
 COPY --from=builder /aaw-marketplace-microservices/tenant/dist/ ./dist
 COPY --from=builder /aaw-marketplace-microservices/tenant/package.json ./dist/package.json
+COPY --from=builder /aaw-marketplace-microservices/tenant/src/swagger.json ./dist/src
 
 # Set Working Directory to `dist/`
 WORKDIR /aaw-marketplace-microservices/tenant/dist

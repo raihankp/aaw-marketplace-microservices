@@ -27,6 +27,8 @@ WORKDIR /aaw-marketplace-microservices/authentication
 
 COPY --from=builder /aaw-marketplace-microservices/authentication/dist/ ./dist
 COPY --from=builder /aaw-marketplace-microservices/authentication/package.json ./dist/package.json
+COPY --from=builder /aaw-marketplace-microservices/authentication/src/swagger.v1.json ./dist/src
+COPY --from=builder /aaw-marketplace-microservices/authentication/src/swagger.v2.json ./dist/src
 
 # Set Working Directory to `dist/`
 WORKDIR /aaw-marketplace-microservices/authentication/dist

@@ -27,6 +27,8 @@ WORKDIR /aaw-marketplace-microservices/products
 
 COPY --from=builder /aaw-marketplace-microservices/products/dist/ ./dist
 COPY --from=builder /aaw-marketplace-microservices/products/package.json ./dist/package.json
+COPY --from=builder /aaw-marketplace-microservices/products/src/swagger.v1.json ./dist/src
+COPY --from=builder /aaw-marketplace-microservices/products/src/swagger.v2.json ./dist/src
 
 # Set Working Directory to `dist/`
 WORKDIR /aaw-marketplace-microservices/products/dist

@@ -1,5 +1,25 @@
 # Marketplace API
 
+## Step By Step
+1. masuk docker exec untuk service authentication, jalankan "node generateAdminToken.js" di /dist/src/generateAdminToken.js sebanyak 2x sampai dapet token
+2. masukin ke postman, check di /api/auth/verify-admin-token bener apa tidak tokennya, kalau benar, masukin ke authorization bearer
+3. buat tenant baru dan copy tenant_id nya
+4. close container, buka docker-compose.yaml lalu masukkan TENANT_ID={tennat_id_baru} di bagian environtments untuk SEMUA service kecuali tenant
+5. jalankan "docker compose up -d --force-recreate" lalu buka docker, ke inspect dan env, pastiin udah keganti
+6. gunain tokennya admin untuk create category & product
+7. register akun sendiri dan login biar dapet tokennya dan ganti token di authorization bearernya jdi punya user
+8. lakukan sisanya (get all category, product, add to cart, order, dll)
+
+Notes: 
+- yang butuh tenant_id diupdate adalah (order, product, wishlist, authentication)
+- yang butuh admin_tenant_id adalah (authentication untuk verify admintokenservice)
+- somehow admin_tenant_id ini tidak berhubungan dengan tenant samsek, tapi berhubungan sama pembuatan generateAdminToken
+- khusus service tenant gabutuh tenant_id ya karena dia pembuat tenantnya
+- service product (khusus untuk post dan put dan delete) & tenant, mereka manggil verify-admin-token (terlihat dari verifyJWTProduct) sehingga token yg dipke di authorization bearer adalah admin token, bukan user token
+- semua service lainnya (kecuali product yg post put delete & service tenant) perlu token user, bukan token admin
+
+
+
 ## Overview
 
 REST API for a marketplace application built with Express.js, PostgreSQL, and Drizzle ORM.

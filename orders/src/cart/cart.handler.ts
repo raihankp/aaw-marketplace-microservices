@@ -14,6 +14,13 @@ export const addItemToCartHandler = async (req: Request, res: Response) => {
     return res.status(response.status).send(response.data);
 }
 
+export const addItemToCartHandlerV2 = async (req: Request, res: Response) => {
+    const { user } = req.body;
+    const { product_id, quantity } = req.body;
+    const response = await Service.addItemToCartServiceV2(user, product_id, quantity);
+    return res.status(response.status).send(response.data);
+}
+
 export const editCartItemHandler = async (req: Request, res: Response) => {
     const { user } = req.body;
     const { cart_id, quantity } = req.body;

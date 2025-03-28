@@ -6,8 +6,14 @@ import cors from "cors";
 
 import tenantRoutes from './tenant/tenant.routes';
 import express_prom_bundle from "express-prom-bundle";
+import swaggerUi from "swagger-ui-express";
+const fs = require("fs");
 
 const app: Express = express();
+
+// Initialize Swagger
+const swaggerDocument = JSON.parse(fs.readFileSync("./src/swagger.json"));
+app.use("/api/tenant/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Prometheus metrics middleware
 const metricsMiddleware = express_prom_bundle({

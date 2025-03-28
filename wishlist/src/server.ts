@@ -5,10 +5,19 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 
 import wishlistRoutes from "./wishlist/wishlist.routes";
+import wishlistRoutesV2 from "./wishlist/wishlist.routes.v2";
 
 import express_prom_bundle from "express-prom-bundle";
+import swaggerUi from "swagger-ui-express";
+const fs = require("fs");
 
 const app: Express = express();
+
+// Initialize Swagger
+const swaggerV1 = JSON.parse(fs.readFileSync("./src/swagger.v1.json"));
+const swaggerV2 = JSON.parse(fs.readFileSync("./src/swagger.v2.json"));
+app.use("/api/wishlist/api-docs", swaggerUi.serveFiles(swaggerV1), swaggerUi.setup(swaggerV1));
+app.use("/api/v2/wishlists/api-docs", swaggerUi.serveFiles(swaggerV2), swaggerUi.setup(swaggerV2));
 
 // Prometheus metrics middleware
 const metricsMiddleware = express_prom_bundle({
@@ -29,6 +38,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/v2/wishlists', wishlistRoutesV2);
 
 // Health check endpoint
 app.get('/health', (_, res) => {

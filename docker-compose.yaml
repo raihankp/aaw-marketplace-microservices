@@ -16,6 +16,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=aaw_marketplace_authentication
+      - TENANT_ID=d390488d-9e07-4776-a5c3-839490018d7b
 
   orders:
     build: ./orders
@@ -32,6 +33,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=aaw_marketplace_orders
+      - TENANT_ID=d390488d-9e07-4776-a5c3-839490018d7b
 
   products:
     build: ./products
@@ -48,6 +50,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=aaw_marketplace_products
+      - TENANT_ID=d390488d-9e07-4776-a5c3-839490018d7b
 
   tenant:
     build: ./tenant
@@ -80,6 +83,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=aaw_marketplace_wishlist
+      - TENANT_ID=d390488d-9e07-4776-a5c3-839490018d7b
 
   auth_db:
     image: postgres:latest

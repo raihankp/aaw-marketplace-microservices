@@ -4,9 +4,18 @@ dotenv.config();
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import authRoutes from "./user/user.routes";
+import authRoutesV2 from "./user/user.routes.v2";
 import express_prom_bundle from "express-prom-bundle";
+import swaggerUi from "swagger-ui-express";
+const fs = require("fs");
 
 const app: Express = express();
+
+// Load Swagger JSON files
+const swaggerV1 = JSON.parse(fs.readFileSync("./src/swagger.v1.json"));
+const swaggerV2 = JSON.parse(fs.readFileSync("./src/swagger.v2.json"));
+app.use("/api/auth/api-docs", swaggerUi.serveFiles(swaggerV1), swaggerUi.setup(swaggerV1));
+app.use("/api/v2/auth/api-docs", swaggerUi.serveFiles(swaggerV2), swaggerUi.setup(swaggerV2));
 
 // Prometheus metrics middleware (optional)
 const metricsMiddleware = express_prom_bundle({
@@ -27,6 +36,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/v2/auth', authRoutesV2);
 
 // Health check endpoint
 app.get('/health', (_, res) => {

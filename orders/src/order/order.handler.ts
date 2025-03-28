@@ -7,6 +7,12 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
     return res.status(response.status).send(response.data);
 }
 
+export const getAllOrdersHandlerV2 = async (req: Request, res: Response) => {
+    const { user } = req.body;
+    const response = await Service.getAllOrdersServiceV2(user);
+    return res.status(response.status).send(response.data);
+}
+
 export const getOrderDetailHandler = async (req: Request, res: Response) => {
     const { user } = req.body;
     const { orderId } = req.params;

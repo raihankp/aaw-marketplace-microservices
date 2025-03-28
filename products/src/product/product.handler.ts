@@ -18,6 +18,12 @@ export const getProductByIdHandler = async (req: Request, res: Response) => {
     return res.status(response.status).send(response.data);
 }
 
+export const getProductByIdHandlerV2 = async (req: Request, res: Response) => {
+    const { id } = req.params
+    const response = await Service.getProductByIdServiceV2(id);
+    return res.status(response.status).send(response.data);
+}
+
 export const getProductByCategoryHandler = async (req: Request, res: Response) => {
     const { category_id } = req.params
     const response = await Service.getProductByCategoryService(category_id);
@@ -48,6 +54,13 @@ export const editProductHandler = async (req: Request, res: Response) => {
     return res.status(response.status).send(response.data);
 }
 
+export const editProductHandlerV2 = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { name, description, price, quantity_available, category_id } = req.body;
+    const response = await Service.editProductServiceV2(id, name, description, price, quantity_available, category_id);
+    return res.status(response.status).send(response.data);
+}
+
 export const editCategoryHandler = async (req: Request, res: Response) => {
     const { category_id } = req.params;
     const { name } = req.body;
@@ -58,6 +71,12 @@ export const editCategoryHandler = async (req: Request, res: Response) => {
 export const deleteProductHandler = async (req: Request, res: Response) => {
     const { id } = req.params;
     const response = await Service.deleteProductService(id);
+    return res.status(response.status).send(response.data);
+}
+
+export const deleteProductHandlerV2 = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const response = await Service.deleteProductServiceV2(id);
     return res.status(response.status).send(response.data);
 }
 
